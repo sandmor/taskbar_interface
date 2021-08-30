@@ -103,7 +103,7 @@ Currently, there is no way to use this library if your framework/library don't p
 
 Currently, the system-side of what this library aims to do is very immature. We did our best but except for Cinnamon desktop
 and maybe some others that also make use of `libxapps`. For the majority including KDE Plasma, Plain dock(Elementary OS) and
-DockbarX(XFCE, MATE, legacy gnome2) is required to use the "Unity protocol" that includes as a major flaw, that you need
+DockbarX(XFCE, MATE and legacy gnome2) is required to use the "Unity protocol" that includes as a major flaw, that you need
 to specific the `.desktop` file of your app. So your app must be property installed in the system, not portable or downloaded
 and ran.
 
