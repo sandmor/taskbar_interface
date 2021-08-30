@@ -20,7 +20,10 @@ dbus = "0.9"
 x11rb = { version = "0.9", features = ["allow-unsafe-code", "dl-libxcb"] }
 
 [target.'cfg(target_os = "windows")'.dependencies]
-bindings = { path = "./windows_bindings" }
+windows = "0.19"
+
+[target.'cfg(target_os = "windows")'.build-dependencies]
+windows = "0.19"
 
 [dev-dependencies]
 winit = "0.25"

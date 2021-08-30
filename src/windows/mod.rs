@@ -1,6 +1,7 @@
 use std::mem;
 
-use bindings::Windows::Win32::{
+windows::include_bindings!();
+use self::Windows::Win32::{
     Foundation::HWND,
     System::{
         Com::{CoCreateInstance, CoInitializeEx, CLSCTX_ALL, COINIT_MULTITHREADED},

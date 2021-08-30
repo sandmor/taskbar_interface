@@ -1,3 +1,4 @@
+#[cfg(target_os = "windows")]
 fn main() {
     windows::build!(
         Windows::Win32::System::Com::*,
@@ -6,3 +7,6 @@ fn main() {
         Windows::Win32::UI::Shell::*,
     );
 }
+
+#[cfg(not(target_os = "windows"))]
+fn main() {}
