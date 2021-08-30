@@ -15,6 +15,7 @@ mod platform;
 #[cfg(not(any(all(unix, not(target_os = "macos")), target_os = "windows")))]
 compile_error!("Platform not supported");
 
+#[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum ProgressIndicatorState {
     /// The progress indicator is not visible.
     NoProgress,

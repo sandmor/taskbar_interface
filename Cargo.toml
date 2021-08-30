@@ -2,8 +2,13 @@
 name = "taskbar_interface"
 version = "0.1.0"
 edition = "2018"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+license = "MIT"
+description = "An interface to the desktop taskbar"
+documentation = "https://docs.rs/taskbar_interface"
+repository = "https://github.com/sandmor/taskbar_interface"
+readme = "README.md"
+keywords = ["taskbar", "interfaces", "ui"]
+categories = ["gui"]
 
 [dependencies]
 raw-window-handle = "0"
