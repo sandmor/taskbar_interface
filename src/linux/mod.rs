@@ -52,7 +52,7 @@ impl TaskbarIndicator {
 
     pub fn set_progress_state(&mut self, state: ProgressIndicatorState) {
         let visible = match state {
-            ProgressIndicatorState::NoProgress => false,
+            ProgressIndicatorState::NoProgress | ProgressIndicatorState::Indeterminate => false,
             _ => true,
         };
         self.progress_visible = visible;
