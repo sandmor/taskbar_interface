@@ -44,7 +44,7 @@ impl TaskbarIndicator {
     fn update_progress(&self) {
         unsafe {
             self.taskbar
-                .SetProgressValue(self.hwnd, progress, MAX_PROGRESS)
+                .SetProgressValue(self.hwnd, self.progress, MAX_PROGRESS)
                 .unwrap();
         }
     }

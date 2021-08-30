@@ -66,7 +66,8 @@ impl TaskbarInterface {
         self.platform.set_progress_state(state)
     }
 
-    /// Hightlights the app in the taskbar.
+    /// Hightlights the app in the taskbar. Doubt to platform limitations if this is enable on Windows and
+    /// the app window is focused in then this will be disable automatically and you will need to enable it again.
     pub fn needs_attention(&mut self, needs_attention: bool) {
         self.platform.needs_attention(needs_attention)
     }
