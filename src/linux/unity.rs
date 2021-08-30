@@ -78,9 +78,7 @@ impl Manager {
             )
             .append1(&self.app_uri)
             .append1(properties);
-            if let Err(_) = self.conn.send(signal) {
-                return Err(Box::new("Failed to send D-Bus signal".to_owned()));
-            }
+            self.conn.send(signal).unwrap();
         }
         Ok(())
     }
