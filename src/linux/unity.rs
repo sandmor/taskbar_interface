@@ -78,7 +78,9 @@ impl Manager {
             )
             .append1(&self.app_uri)
             .append1(properties);
-            self.conn.send(signal)?;
+            if let Err(_) = self.conn.send(signal) {
+                return Err("Failed to send D-Bus signal");
+            }
         }
         Ok(())
     }

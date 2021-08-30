@@ -46,7 +46,7 @@ impl TaskbarInterface {
         uri: impl AsRef<str>,
     ) -> Result<Self, Box<dyn std::error::Error>> {
         self.platform = self.platform.unity_app_uri(uri)?;
-        self
+        Ok(self)
     }
 
     #[cfg(all(unix, not(target_os = "macos")))]

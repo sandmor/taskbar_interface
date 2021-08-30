@@ -26,7 +26,7 @@ impl TaskbarIndicator {
 
     pub fn unity_app_uri(mut self, uri: impl AsRef<str>) -> Result<Self, dbus::Error> {
         self.set_unity_app_uri(uri)?;
-        self
+        Ok(self)
     }
 
     pub fn set_unity_app_uri(&mut self, uri: impl AsRef<str>) -> Result<(), dbus::Error> {
