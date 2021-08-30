@@ -42,7 +42,7 @@ impl Manager {
         Ok(m)
     }
 
-    fn update(&mut self) {
+    fn update(&mut self) -> Result<(), Box<dyn std::error::Error>> {
         let mut properties = PropMap::new();
         if self.dirty_progress {
             self.dirty_progress = false;
@@ -72,31 +72,41 @@ impl Manager {
         }
         if !properties.is_empty() {
             let signal = Message::signal(
-                &Path::new("/").unwrap(),
-                &Interface::new("com.canonical.Unity.LauncherEntry").unwrap(),
-                &Member::new("Update").unwrap(),
+                &Path::new("/")?,
+                &Interface::new("com.canonical.Unity.LauncherEntry")?,
+                &Member::new("Update")?,
             )
             .append1(&self.app_uri)
             .append1(properties);
-            self.conn.send(signal).unwrap();
+            self.conn.send(signal)?;
         }
+        Ok(())
     }
 
-    pub fn set_progress(&mut self, progress: f64) {
+    pub fn set_progress(&mut self, progress: f64) -> Result<(), Box<dyn std::error::Error>> {
         self.progress = progress;
         self.dirty_progress = true;
-        self.update();
+        self.update()?;
+        Ok(())
     }
 
-    pub fn set_progress_visible(&mut self, is_visible: bool) {
+    pub fn set_progress_visible(
+        &mut self,
+        is_visible: bool,
+    ) -> Result<(), Box<dyn std::error::Error>> {
         self.progress_visible = is_visible;
         self.dirty_progress_visible = true;
-        self.update();
+        self.update()?;
+        Ok(())
     }
 
-    pub fn needs_attention(&mut self, needs_attention: bool) {
+    pub fn needs_attention(
+        &mut self,
+        needs_attention: bool,
+    ) -> Result<(), Box<dyn std::error::Error>> {
         self.urgent = needs_attention;
         self.dirty_urgent = true;
-        self.update();
+        self.update()?;
+        Ok(())
     }
 }

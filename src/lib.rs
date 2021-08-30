@@ -41,8 +41,11 @@ impl TaskbarInterface {
 
     #[cfg(all(unix, not(target_os = "macos")))]
     /// Refer to `set_unity_app_uri`.
-    pub fn unity_app_uri(mut self, uri: impl AsRef<str>) -> Self {
-        self.platform = self.platform.unity_app_uri(uri);
+    pub fn unity_app_uri(
+        mut self,
+        uri: impl AsRef<str>,
+    ) -> Result<Self, Box<dyn std::error::Error>> {
+        self.platform = self.platform.unity_app_uri(uri)?;
         self
     }
 
@@ -58,18 +61,24 @@ impl TaskbarInterface {
 
     /// Changes the indicate progress proportion 0.0-1.0, as a note, this will set the progress indicator state
     /// to `Normal` if it is in `NoProgress` or `Indeterminate`.
-    pub fn set_progress(&mut self, progress: f64) {
+    pub fn set_progress(&mut self, progress: f64) -> Result<(), Box<dyn std::error::Error>> {
         self.platform.set_progress(progress)
     }
 
     /// Changes the progress indicator state.
-    pub fn set_progress_state(&mut self, state: ProgressIndicatorState) {
+    pub fn set_progress_state(
+        &mut self,
+        state: ProgressIndicatorState,
+    ) -> Result<(), Box<dyn std::error::Error>> {
         self.platform.set_progress_state(state)
     }
 
     /// Hightlights the app in the taskbar. Doubt to platform limitations if this is enable on Windows and
     /// the app window is focused in then this will be disable automatically and you will need to enable it again.
-    pub fn needs_attention(&mut self, needs_attention: bool) {
+    pub fn needs_attention(
+        &mut self,
+        needs_attention: bool,
+    ) -> Result<(), Box<dyn std::error::Error>> {
         self.platform.needs_attention(needs_attention)
     }
 }

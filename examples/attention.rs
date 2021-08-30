@@ -31,7 +31,9 @@ fn main() {
                 window_id: _,
             } => *control_flow = ControlFlow::Exit,
             Event::MainEventsCleared => {
-                indicator.needs_attention(start.elapsed().as_secs() % 10 <= 5);
+                indicator
+                    .needs_attention(start.elapsed().as_secs() % 10 <= 5)
+                    .unwrap();
             }
             _ => (),
         }

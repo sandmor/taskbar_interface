@@ -24,8 +24,8 @@ impl TaskbarIndicator {
         })
     }
 
-    pub fn unity_app_uri(mut self, uri: impl AsRef<str>) -> Self {
-        let _ = self.set_unity_app_uri(uri);
+    pub fn unity_app_uri(mut self, uri: impl AsRef<str>) -> Result<Self, dbus::Error> {
+        self.set_unity_app_uri(uri)?;
         self
     }
 
@@ -38,7 +38,7 @@ impl TaskbarIndicator {
         Ok(())
     }
 
-    pub fn set_progress(&mut self, progress: f64) {
+    pub fn set_progress(&mut self, progress: f64) -> Result<(), Box<dyn std::error::Error>> {
         self.set_progress_state(ProgressIndicatorState::Normal);
         let progress = progress.clamp(0.0, 1.0);
         self.progress = progress;
@@ -48,9 +48,13 @@ impl TaskbarIndicator {
         if let Some(ref mut unity) = self.unity {
             unity.set_progress(progress);
         }
+        Ok(())
     }
 
-    pub fn set_progress_state(&mut self, state: ProgressIndicatorState) {
+    pub fn set_progress_state(
+        &mut self,
+        state: ProgressIndicatorState,
+    ) -> Result<(), Box<dyn std::error::Error>> {
         let visible = match state {
             ProgressIndicatorState::NoProgress | ProgressIndicatorState::Indeterminate => false,
             _ => true,
@@ -62,9 +66,13 @@ impl TaskbarIndicator {
         if let Some(ref mut unity) = self.unity {
             unity.set_progress_visible(visible);
         }
+        Ok(())
     }
 
-    pub fn needs_attention(&mut self, needs_attention: bool) {
+    pub fn needs_attention(
+        &mut self,
+        needs_attention: bool,
+    ) -> Result<(), Box<dyn std::error::Error>> {
         self.needs_attention = needs_attention;
         if let Some(ref mut xapps) = self.xapps {
             xapps.needs_attention(needs_attention);
@@ -72,5 +80,6 @@ impl TaskbarIndicator {
         if let Some(ref mut unity) = self.unity {
             unity.needs_attention(needs_attention);
         }
+        Ok(())
     }
 }

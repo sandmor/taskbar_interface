@@ -116,7 +116,7 @@ impl Manager {
         );
     }
 
-    pub fn set_progress(&mut self, progress: f64) {
+    pub fn set_progress(&mut self, progress: f64) -> Result<(), Box<dyn std::error::Error>> {
         let progress = (progress * 100.0) as u32;
         if self.progress != progress {
             self.progress = progress;
@@ -124,9 +124,13 @@ impl Manager {
                 self.update_progress_property();
             }
         }
+        Ok(())
     }
 
-    pub fn set_progress_visible(&mut self, is_visible: bool) {
+    pub fn set_progress_visible(
+        &mut self,
+        is_visible: bool,
+    ) -> Result<(), Box<dyn std::error::Error>> {
         if self.progress_visible != is_visible {
             self.progress_visible = is_visible;
             if self.progress_visible {
@@ -137,9 +141,13 @@ impl Manager {
                 );
             }
         }
+        Ok(())
     }
 
-    pub fn needs_attention(&mut self, needs_attention: bool) {
+    pub fn needs_attention(
+        &mut self,
+        needs_attention: bool,
+    ) -> Result<(), Box<dyn std::error::Error>> {
         if self.pulse != needs_attention {
             self.pulse = needs_attention;
             self.update_property(
@@ -147,5 +155,6 @@ impl Manager {
                 needs_attention as u32,
             );
         }
+        Ok(())
     }
 }

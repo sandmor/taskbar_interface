@@ -26,7 +26,7 @@ fn main() {
             } if window_id == window.id() => *control_flow = ControlFlow::Exit,
             Event::MainEventsCleared => {
                 let progress = start.elapsed().as_secs_f64().fract();
-                indicator.set_progress(progress);
+                indicator.set_progress(progress).unwrap();
             }
             _ => (),
         }

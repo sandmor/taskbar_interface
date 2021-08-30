@@ -42,23 +42,27 @@ impl TaskbarIndicator {
         })
     }
 
-    fn update_progress(&self) {
+    fn update_progress(&self) -> Result<(), Box<dyn std::error::Error>> {
         unsafe {
             self.taskbar
-                .SetProgressValue(self.hwnd, self.progress, MAX_PROGRESS)
-                .unwrap();
+                .SetProgressValue(self.hwnd, self.progress, MAX_PROGRESS)?;
         }
+        Ok(())
     }
 
-    pub fn set_progress(&mut self, progress: f64) {
+    pub fn set_progress(&mut self, progress: f64) -> Result<(), Box<dyn std::error::Error>> {
         let progress = (progress.clamp(0.0, 1.0) * MAX_PROGRESS as f64) as u64;
         if self.progress != progress {
             self.progress = progress;
-            self.update_progress();
+            self.update_progress()?;
         }
+        Ok(())
     }
 
-    pub fn set_progress_state(&mut self, state: ProgressIndicatorState) {
+    pub fn set_progress_state(
+        &mut self,
+        state: ProgressIndicatorState,
+    ) -> Result<(), Box<dyn std::error::Error>> {
         let flag = match state {
             ProgressIndicatorState::NoProgress => TBPF_NOPROGRESS,
             ProgressIndicatorState::Indeterminate => TBPF_INDETERMINATE,
@@ -67,7 +71,7 @@ impl TaskbarIndicator {
             ProgressIndicatorState::Error => TBPF_ERROR,
         };
         unsafe {
-            self.taskbar.SetProgressState(self.hwnd, flag).unwrap();
+            self.taskbar.SetProgressState(self.hwnd, flag)?;
         }
         if matches!(
             state,
@@ -75,11 +79,15 @@ impl TaskbarIndicator {
                 | ProgressIndicatorState::Paused
                 | ProgressIndicatorState::Error
         ) {
-            self.update_progress();
+            self.update_progress()?;
         }
+        Ok(())
     }
 
-    pub fn needs_attention(&mut self, needs_attention: bool) {
+    pub fn needs_attention(
+        &mut self,
+        needs_attention: bool,
+    ) -> Result<(), Box<dyn std::error::Error>> {
         let flags = match needs_attention {
             true => FLASHW_TIMER | FLASHW_TRAY,
             false => FLASHW_STOP,
@@ -94,5 +102,6 @@ impl TaskbarIndicator {
         unsafe {
             FlashWindowEx(&mut params);
         }
+        Ok(())
     }
 }
