@@ -11,7 +11,7 @@ keywords = ["taskbar", "interfaces", "ui"]
 categories = ["gui"]
 
 [dependencies]
-raw-window-handle = "0"
+raw-window-handle = "0.5"
 
 [target.'cfg(all(unix, not(target_os="macos")))'.dependencies]
 lazy_static = "1"
